@@ -23,16 +23,19 @@ class DatatableTable:
     records_per_page: int  # the amount of records per page by default
     processing: bool  # whether datatable shows processing screen or not
     datatable_selector: str  # html selector for the datatable you want populated
+    extra_datatable_arguments: dict
     type: DatatableType
 
     def __init__(
-            self, columns, endpoint, records_per_page, processing, datatable_selector
+            self, columns, records_per_page, processing, datatable_selector, extra_datatable_arguments, type,
     ):
         self.columns = columns
-        self.endpoint = endpoint
         self.records_per_page = records_per_page
         self.processing = processing
         self.datatable_selector = datatable_selector
+        self.extra_datatable_arguments = extra_datatable_arguments
+        self.processing_as_string = str(self.processing).lower()
+        self.type = type
         self.columns_dict = {
             col.data_name: {
                 "column_name": col.column_name,
@@ -40,19 +43,20 @@ class DatatableTable:
             }
             for col in self.columns
         }
-        self.processing_as_string = str(self.processing).lower()
 
 
 class AjaxDatatable(DatatableTable):
-    def __init__(self):
-        super()
+    def __init__(self, columns, records_per_page, processing, datatable_selector, extra_datatable_arguments, endpoint):
+        super(columns, records_per_page, processing, datatable_selector, extra_datatable_arguments, DatatableType.AJAX)
+        self.endpoint = endpoint
 
 
 class JSArrayDatatable(DatatableTable):
-    def __init__(self):
-        super()
+    def __init__(self, columns, records_per_page, processing, datatable_selector, extra_datatable_arguments, js_array_variable_name)
+        super(columns, records_per_page, processing, datatable_selector, extra_datatable_arguments, DatatableType.JS_ARRAY)
+        self.js_array_variable_name = js_array_variable_name
 
 
 class HTMLDatatable(DatatableTable):
-    def __init__(self):
-        super()
+    def __init__(self, columns, records_per_page, processing, datatable_selector, extra_datatable_arguments)
+        super(columns, records_per_page, processing, datatable_selector, extra_datatable_arguments, DatatableType.HTML)
