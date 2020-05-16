@@ -5,14 +5,14 @@ from jinja2.ext import Extension
 class DatatableExt(Extension):
     tags = set(['datatable'])
 
-    def _datatable(self, id_name="example", class_name="myDataTable"):
-        return '<table id="' + id_name + '" class="' + class_name + '"></table>'
+    def _datatable(self, table_view):
+        html = table_view.html
+        js = '<script> let endpoint = "' + table_view.endpoint + '" </script>'
+        return html + js
 
     def parse(self, parser):
         lineno = next(parser.stream).lineno
         args = [parser.parse_expression()]
-        if parser.stream.skip_if("comma"):
-            args.append(parser.parse_expression())
 
         call = self.call_method('_datatable', args, lineno=lineno)
         token = parser.stream.current
