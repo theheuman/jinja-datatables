@@ -1,6 +1,7 @@
 from typing import List
 from enum import Enum
 
+
 class DatatableColumn:
     data_name: str
     column_name: str
@@ -9,7 +10,7 @@ class DatatableColumn:
     def __init__(self, data_name: str, column_name: str, filter_type: str):
         self.data_name = data_name
         self.column_name = column_name
-        self.filter_type = filter_type
+        self.filter_type = "filter_" + filter_type
 
 
 class DatatableType(Enum):
@@ -37,11 +38,15 @@ class DatatableTable:
     ):
         self.columns = columns
 
+        if not html_arguments:
+            html_arguments = {}
         for key, value in self.html_default_arguments.items():
             if key not in html_arguments:
                 html_arguments[key] = value
         self.html_arguments = html_arguments
 
+        if not datatable_arguments:
+            datatable_arguments = {}
         for key, value in self.datatable_default_arguments.items():
             if key not in datatable_arguments:
                 datatable_arguments[key] = value
