@@ -37,12 +37,12 @@ class DatatableTable:
     ):
         self.columns = columns
 
-        for key, value in self.html_default_arguments:
+        for key, value in self.html_default_arguments.items():
             if key not in html_arguments:
                 html_arguments[key] = value
         self.html_arguments = html_arguments
 
-        for key, value in self.datatable_default_arguments:
+        for key, value in self.datatable_default_arguments.items():
             if key not in datatable_arguments:
                 datatable_arguments[key] = value
         self.datatable_arguments = datatable_arguments
