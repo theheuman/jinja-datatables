@@ -1,14 +1,21 @@
-from jinja2 import lexer, nodes
+import os
+from jinja2 import lexer, nodes, Environment, FileSystemLoader
 from jinja2.ext import Extension
+from jinja_datatables.datatable_classes import DatatableType, DatatableColumn, DatatableTable
 
 
 class DatatableExt(Extension):
     tags = set(['datatable'])
 
-    def _datatable(self, table_view):
-        html = table_view.html
-        js = '<script> let endpoint = "' + table_view.endpoint + '" </script>'
-        return html + js
+    def _datatable(self, table_view: DatatableTable):
+        current_dir = os.path.dirname(os.path.realpath(__file__))
+        template_dir = os.path.join(current_dir, "../templates")
+        env = Environment(loader=FileSystemLoader(template_dir))
+        template_name = table_view.datatable_type.value
+        template = env.get_template(template_name)
+
+        html = template.render(table_view=table_view)
+        return html
 
     def parse(self, parser):
         lineno = next(parser.stream).lineno
