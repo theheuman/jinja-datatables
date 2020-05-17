@@ -21,16 +21,34 @@ class DatatableType(Enum):
 class DatatableTable:
     columns: List[DatatableColumn]  # the columns you want shown
     html_arguments: dict # key value pairs to be set on the table element, if it does not contain id, it will be assigned as "example"
+    html_default_arguments = {
+        "id": "example",
+        "class": "table",
+    }
     datatable_arguments: dict # key value pairs to be plugged in to the datatables constructor
-    type: DatatableType
+    datatable_default_arguments = {
+        "records_per_page": 25,
+        "processing": "true",
+    }
+    datatable_type: DatatableType
 
     def __init__(
-            self, columns, table_id, html_argument, datatable_arguments, type,
+            self, columns, html_arguments, datatable_arguments, datatable_type,
     ):
         self.columns = columns
+
+        for key, value in self.html_default_arguments:
+            if key not in html_arguments:
+                html_arguments[key] = value
         self.html_arguments = html_arguments
+
+        for key, value in self.datatable_default_arguments:
+            if key not in datatable_arguments:
+                datatable_arguments[key] = value
         self.datatable_arguments = datatable_arguments
-        self.type = type
+
+        self.datatable_type = datatable_type
+
         self.columns_dict = {
             col.data_name: {
                 "column_name": col.column_name,
@@ -41,17 +59,17 @@ class DatatableTable:
 
 
 class AjaxDatatable(DatatableTable):
-    def __init__(self, columns, html_arguments, datatable_arguments,  endpoint):
-        super(columns, html_arguments, datatable_arguments, DatatableType.AJAX)
+    def __init__(self, columns, html_arguments, datatable_arguments, endpoint):
+        super().__init__(columns, html_arguments, datatable_arguments, DatatableType.AJAX)
         self.endpoint = endpoint
 
 
 class JSArrayDatatable(DatatableTable):
-    def __init__(self, columns, html_arguments, datatable_arguments, js_array_variable_name)
-        super(columns, html_arguments, datatable_arguments, DatatableType.JS_ARRAY)
+    def __init__(self, columns, html_arguments, datatable_arguments, js_array_variable_name):
+        super().__init__(columns, html_arguments, datatable_arguments, DatatableType.JS_ARRAY)
         self.js_array_variable_name = js_array_variable_name
 
 
 class HTMLDatatable(DatatableTable):
-    def __init__(self, columns, html_arguments, datatable_arguments)
-        super(columns, html_arguments, datatable_arguments, DatatableType.HTML)
+    def __init__(self, columns, html_arguments, datatable_arguments):
+        super().__init__(columns, html_arguments, datatable_arguments, DatatableType.HTML)
