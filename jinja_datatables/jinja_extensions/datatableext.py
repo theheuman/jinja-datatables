@@ -9,9 +9,9 @@ class DatatableExt(Extension):
 
     def _datatable(self, table_view: DatatableTable):
         current_dir = os.path.dirname(os.path.realpath(__file__))
-        template_dir = os.path.join(current_dir, "../templates")
+        template_dir = os.path.join(current_dir, "../static_assets")
         env = Environment(loader=FileSystemLoader(template_dir))
-        template_name = table_view.datatable_type.value
+        template_name = "html/" + table_view.datatable_type.value
         template = env.get_template(template_name)
 
         html = template.render(table_view=table_view)
