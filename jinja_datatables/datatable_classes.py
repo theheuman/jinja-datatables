@@ -1,5 +1,6 @@
 from typing import List
 from enum import Enum
+from typing import Optional
 
 
 class DatatableColumn:
@@ -7,10 +8,17 @@ class DatatableColumn:
     column_name: str
     filter_type: str
 
-    def __init__(self, data_name: str, column_name: str, filter_type: str):
+    # extra arguments to put in a column e.x.:
+    #   {"render": "function ( data, type, row, meta) {return '<img src=\"' + data +'\"/>';}}"}
+    #   would translate to
+    #   render: function ( data, type, row, meta) {return '<img src="' + data +'"/>';}},
+    extras: dict
+
+    def __init__(self, data_name: str, column_name: str, filter_type: str, extras: dict = {}):
         self.data_name = data_name
         self.column_name = column_name
         self.filter_type = "filter_" + filter_type
+        self.extras = extras
 
 
 class DatatableType(Enum):

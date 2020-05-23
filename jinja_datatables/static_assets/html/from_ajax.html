@@ -16,7 +16,10 @@
                     data: "{{ column.data_name }}",
                     name: "{{ column.data_name }}",
                     target: {{ loop.index0 }},
-                    className: "{{ column.filter_type + ' ' + column.data_name }}"
+                    className: "{{ column.filter_type + ' ' + column.data_name }}",
+                    {% for key, value in column.extras.items() %}
+                    {{ key }}: {{ value }},
+                    {% endfor %}
                 },
             {% endfor %}
             ]

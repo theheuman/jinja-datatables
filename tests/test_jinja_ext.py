@@ -7,7 +7,7 @@ from jinja_datatables.datatable_classes import DatatableColumn, AjaxDatatable, J
 
 def test_ajax(template):
     columns = [
-        DatatableColumn("data_name", "Column Name", "filter_text"),
+        DatatableColumn("data_name", "Column Name", "filter_text", {"render": "function ( data, type, row, meta) {return '<img src=\"' + data +'\"/>';}}"}),
     ]
     endpoint = "/get_data"
     table_view = AjaxDatatable(
@@ -54,7 +54,6 @@ def main():
     print(test_ajax(template))
     # print(test_js_array(template))
     # print(test_html(template))
-
 
 if __name__ == '__main__':
     main()
