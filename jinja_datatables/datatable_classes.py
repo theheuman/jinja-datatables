@@ -10,8 +10,9 @@ class DatatableColumn:
 
     # extra arguments to put in a column e.x.:
     #   {"render": "function ( data, type, row, meta) {return '<img src=\"' + data +'\"/>';}}"}
-    #   would translate to
+    #   would output
     #   render: function ( data, type, row, meta) {return '<img src="' + data +'"/>';}},
+    #   int the columns list
     extras: dict
 
     def __init__(self, data_name: str, column_name: str, filter_type: str, extras: dict = {}):
