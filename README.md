@@ -3,6 +3,14 @@
 A python library to simplify rendering datatables in jinja templates
 
 **Note**: This tool is in development and doesnt 100% work yet, all of it is untested
+
+## TODO
+ - Fix JSArray and HTMLTemplates to include extras
+ - Test from JSArray in homm3 guide
+ - Test from ajax in kalhufvudet
+ - Write test for html
+ - upload to pip for pip install
+ 
 ## Usage
 **See this repo's tests folder for an example**
 
