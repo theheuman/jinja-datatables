@@ -2,9 +2,7 @@
 <script>
     console.log("Hello")
     var table = $("#{{ table_view.html_arguments['id'] }}").DataTable({
-        {% for key, value in table_view.datatable_arguments.items() %}
-            {{key}}: {{value}},
-        {% endfor %}
+
         data: {{table_view.js_array_variable_name}},
         columns: [
         {% for column in table_view.columns %}
@@ -19,7 +17,10 @@
                 {% endfor %}
             },
         {% endfor %}
-        ]
+        ],
+        {% for key, value in table_view.datatable_arguments.items() %}
+        {{key}}: {{value}},
+        {% endfor %}
     });
     buildFilters(table)
 
