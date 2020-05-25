@@ -9,6 +9,8 @@ A python library to simplify rendering datatables in jinja templates
  - Write test for html
  - upload to pip for pip install
  - Add detail row functionality
+ - Add no filter option (basically make the cell blank)
+ - Make filters an option
  
 ## Usage
 **See this repo's tests folder for an example**
