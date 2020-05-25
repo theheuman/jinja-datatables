@@ -1,15 +1,14 @@
 //Functions for building the filters, mostly written by Joseph Turner (joseph.turner@aciwebs.com) with help of datatable examples
 
 function buildFilters( table ) {
-    console.log("1")
     // clone header to create position for filters
     $('#{{ table_view.html_arguments['id'] }} thead tr').clone(true)
             .appendTo( '#{{ table_view.html_arguments['id'] }} thead' );
 
     urlParameters = getUrlParameters();
-    console.log(urlParameters)
 
     //build the filters
+
     buildSelectFilters( table, urlParameters );
     buildTextFilters(table);
     buildDateFilters(table);
@@ -31,10 +30,8 @@ function buildSelectFilters( table, searchParameters ) {
         var title = $(this).text();
 
         //var column = table.column( this, {search: 'applied'} );
-        var colClass = $(this).attr("class").replace(" ", ".");
-        console.log(colClass)
+        var colClass = $(this).attr("class").replace(/ /g, ".");
         var column = table.column("." + colClass);
-        console.log(column)
 
         value = "- Select -";
         var select = $('<select style="width: 100%;"><option value="' + value + '">' + value + '</option></select>');
