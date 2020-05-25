@@ -1,13 +1,12 @@
 import os
 from jinja2 import lexer, nodes, Environment, FileSystemLoader
 from jinja2.ext import Extension
-from jinja_datatables.datatable_classes import DatatableType, DatatableColumn, DatatableTable
 
 
 class DatatableExt(Extension):
     tags = set(['datatable'])
 
-    def _datatable(self, table_view: DatatableTable):
+    def _datatable(self, table_view):
         current_dir = os.path.dirname(os.path.realpath(__file__))
         template_dir = os.path.join(current_dir, "../static_assets")
         env = Environment(loader=FileSystemLoader(template_dir))
