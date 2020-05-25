@@ -1,12 +1,13 @@
 //Functions for building the filters, mostly written by Joseph Turner (joseph.turner@aciwebs.com) with help of datatable examples
 
 function buildFilters( table ) {
-
+    console.log("1")
     // clone header to create position for filters
-    $('{{ table_view.html_arguments['id'] }} thead tr').clone(true)
-            .appendTo( '{{ table_view.html_arguments['id'] }} thead' );
+    $('#{{ table_view.html_arguments['id'] }} thead tr').clone(true)
+            .appendTo( '#{{ table_view.html_arguments['id'] }} thead' );
 
     urlParameters = getUrlParameters();
+    console.log(urlParameters)
 
     //build the filters
     buildSelectFilters( table, urlParameters );
@@ -16,14 +17,14 @@ function buildFilters( table ) {
     //apply the filters
     table.draw();
 
-    //on draw rebuild the select filters incase the values have changed in the columns
+    //on draw rebuild the select filters in case the values have changed in the columns
     table.on( 'draw', function () {
         buildSelectFilters( table, {} );
     } );
 }
 
 function buildSelectFilters( table, searchParameters ) {
-    $('{{ table_view.html_arguments['id'] }} thead tr:eq(1) th.filter_select').each( function (i) {
+    $('#{{ table_view.html_arguments['id'] }} thead tr:eq(1) th.filter_select').each( function (i) {
 
         $(this).removeClass("sorting sorting_asc sorting_desc"); // remove sorting classes from new header ( if they are there )
         $(this).unbind(); // remove events cloned from OG header
@@ -31,7 +32,9 @@ function buildSelectFilters( table, searchParameters ) {
 
         //var column = table.column( this, {search: 'applied'} );
         var colClass = $(this).attr("class").replace(" ", ".");
+        console.log(colClass)
         var column = table.column("." + colClass);
+        console.log(column)
 
         value = "- Select -";
         var select = $('<select style="width: 100%;"><option value="' + value + '">' + value + '</option></select>');
@@ -77,7 +80,7 @@ function buildSelectFilters( table, searchParameters ) {
 // copy the table head row and append it right below the first row,
 // then replace it with the search field
 function buildTextFilters(table){
-    $('{{ table_view.html_arguments['id'] }} thead tr:eq(1) th.filter_text').each( function (i) {
+    $('#{{ table_view.html_arguments['id'] }} thead tr:eq(1) th.filter_text').each( function (i) {
         var title = $(this).text();
         $(this).removeClass("sorting sorting_asc sorting_desc");
         $(this).unbind();
@@ -102,7 +105,7 @@ function buildTextFilters(table){
 // add a date range filter to the column if it is a date
 // filter out rows where the dates in this column are not inclusively within the defined range
 function buildDateFilters(table){
-    $('{{ table_view.html_arguments['id'] }} thead tr:eq(1) th.filter_date').each( function (i) {
+    $('#{{ table_view.html_arguments['id'] }} thead tr:eq(1) th.filter_date').each( function (i) {
         var title = $(this).text();
 
         $(this).removeClass("sorting sorting_asc sorting_desc");
