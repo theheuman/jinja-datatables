@@ -14,12 +14,35 @@ class DatatableColumn:
     #   render: function ( data, type, row, meta) {return '<img src="' + data +'"/>';}},
     #   int the columns list
     extras: dict
+    # all the arguments combined into one dict
+    arguments: dict
 
-    def __init__(self, data_name: str, column_name: str, filter_type: str, extras: dict = {}):
+    target_set: bool = False
+
+    def __init__(self, data_name: str, column_name: str, filter_type: str, extras: dict = None):
         self.data_name = data_name
         self.column_name = column_name
-        self.filter_type = "filter_" + filter_type
-        self.extras = extras
+        self.filter_type = filter_type
+        if not extras:
+            self.extras = dict()
+        else:
+            self.extras = extras
+
+        self.arguments = self.extras
+        if "title" not in self.arguments:
+            self.arguments["title"] = "\"" + self.column_name + "\""
+        if "data" not in self.arguments:
+            self.arguments["data"] = "\"" + self.data_name + "\""
+        if "name" not in self.arguments:
+            self.arguments["name"] = "\"" + self.data_name + "\""
+
+        if "target" in self.arguments:
+            self.target_set = True
+
+        if "className" not in self.arguments:
+            self.arguments["className"] = ""
+        self.arguments["className"] = "\"" + self.arguments["className"] + " filter_" + self.filter_type + " " + self.data_name + "\""
+        print(self.arguments)
 
 
 class DatatableType(Enum):
