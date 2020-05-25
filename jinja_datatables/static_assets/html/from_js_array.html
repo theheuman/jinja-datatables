@@ -1,25 +1,27 @@
 <table{% for key, value in table_view.html_arguments.items() %} {{key}}="{{value}}"{% endfor %}></table>
 <script>
-    $(function () {
-        var table = $("{{ table_view.html_arguments['id'] }}").DataTable({
-            {% for key, value in table_view.datatable_arguments.items() %}
-                {{key}}: {{value}},
-            {% endfor %}
-            data: table_view.js_array_name,
-            columns: [
-            {% for column in table_view.columns %}
-                {
-                    title : "{{ column.column_name }}",
-                    data: "{{ column.data_name }}",
-                    name: "{{ column.data_name }}",
-                    target: {{ loop.index0 }},
-                    className: "{{ column.filter_type + ' ' + column.data_name }}"
-                },
-            {% endfor %}
-            ]
-        });
-        buildFilters(table)
+    console.log("Hello")
+    var table = $("#{{ table_view.html_arguments['id'] }}").DataTable({
+        {% for key, value in table_view.datatable_arguments.items() %}
+            {{key}}: {{value}},
+        {% endfor %}
+        data: {{table_view.js_array_variable_name}},
+        columns: [
+        {% for column in table_view.columns %}
+            {
+                title : "{{ column.column_name }}",
+                data: "{{ column.data_name }}",
+                name: "{{ column.data_name }}",
+                target: {{ loop.index0 }},
+                className: "{{ column.filter_type + ' ' + column.data_name }}",
+                {% for key, value in column.extras.items() %}
+                {{ key }}: {{ value }},
+                {% endfor %}
+            },
+        {% endfor %}
+        ]
     });
+    buildFilters(table)
 
     {% include "js/table.js" %}
 </script>
