@@ -1,5 +1,5 @@
 import os
-from jinja2 import lexer, nodes, Environment, FileSystemLoader
+from jinja2 import lexer, nodes, Environment, FileSystemLoader, Markup
 from jinja2.ext import Extension
 
 
@@ -13,7 +13,7 @@ class DatatableExt(Extension):
         template_name = "html/" + table_view.datatable_type.value
         template = env.get_template(template_name)
 
-        html = template.render(table_view=table_view)
+        html = Markup(template.render(table_view=table_view))
         return html
 
     def parse(self, parser):
