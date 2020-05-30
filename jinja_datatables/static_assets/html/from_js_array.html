@@ -1,6 +1,5 @@
 <table{% for key, value in table_view.html_arguments.items() %} {{key}}="{{value}}"{% endfor %}></table>
 <script>
-    console.log("Hello")
     var table = $("#{{ table_view.html_arguments['id'] }}").DataTable({
 
         data: {{table_view.js_array_variable_name}},
