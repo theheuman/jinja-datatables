@@ -41,7 +41,6 @@ class DatatableColumn:
         if "className" not in self.arguments:
             self.arguments["className"] = ""
         self.arguments["className"] = "\"" + self.arguments["className"] + " filter_" + self.filter_type + " " + self.data_name + "\""
-        print(self.arguments)
 
 
 class DatatableType(Enum):

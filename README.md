@@ -5,7 +5,6 @@ A python library to simplify rendering datatables in jinja templates
 **Note**: This tool is in development and doesnt 100% work yet, all of it is untested
 
 ## TODO
- - Test from ajax in kalhufvudet
  - Write test for html
  - upload to pip for pip install
  - Add detail row functionality
