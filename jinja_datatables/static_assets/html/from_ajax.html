@@ -1,5 +1,6 @@
 <table{% for key, value in table_view.html_arguments.items() %} {{key}}="{{value}}"{% endfor %}></table>
 <script>
+    $( document ).ready(function() {
         var table = $("#{{ table_view.html_arguments['id'] }}").DataTable({
             ajax: {
                 type: "GET",
@@ -23,5 +24,6 @@
         });
         buildFilters(table)
 
-    {% include "js/table.js" %}
+        {% include "js/table.js" %}
+    })
 </script>

@@ -1,24 +1,25 @@
 <table{% for key, value in table_view.html_arguments.items() %} {{key}}="{{value}}"{% endfor %}></table>
 <script>
-    var table = $("#{{ table_view.html_arguments['id'] }}").DataTable({
-
-        data: {{table_view.js_array_variable_name}},
-        columns: [
-        {% for column in table_view.columns %}
-            { {% for key, value in column.extras.items() %}
-                {{ key }}: {{ value }},
+    $( document ).ready(function() {
+        var table = $("#{{ table_view.html_arguments['id'] }}").DataTable({
+            data: {{table_view.js_array_variable_name}},
+            columns: [
+            {% for column in table_view.columns %}
+                { {% for key, value in column.extras.items() %}
+                    {{ key }}: {{ value }},
+                {% endfor %}
+                {% if not column.target_set %}
+                    target: {{ loop.index0 }},
+                {% endif %}
+                },
             {% endfor %}
-            {% if not column.target_set %}
-                target: {{ loop.index0 }},
-            {% endif %}
-            },
-        {% endfor %}
-        ],
-        {% for key, value in table_view.datatable_arguments.items() %}
-        {{key}}: {{value}},
-        {% endfor %}
-    });
-    buildFilters(table)
+            ],
+            {% for key, value in table_view.datatable_arguments.items() %}
+            {{key}}: {{value}},
+            {% endfor %}
+        });
+        buildFilters(table)
 
-    {% include "js/table.js" %}
+        {% include "js/table.js" %}
+    })
 </script>
