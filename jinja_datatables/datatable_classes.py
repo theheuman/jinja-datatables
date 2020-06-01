@@ -6,7 +6,7 @@ class DatatableColumn:
     data_name: str
     column_name: str
     filter_type: str
-
+    show_on_table: bool # if you want the column in the table object, but you don't want it to show in the view
     # extra arguments to put in a column e.x.:
     #   {"render": "function ( data, type, row, meta) {return '<img src=\"' + data +'\"/>';}}"}
     #   would output
@@ -18,10 +18,11 @@ class DatatableColumn:
 
     target_set: bool = False
 
-    def __init__(self, data_name: str, column_name: str, filter_type: str, extras: dict = None):
+    def __init__(self, data_name: str, column_name: str, filter_type: str, extras: dict = None, show_on_table: bool = True):
         self.data_name = data_name
         self.column_name = column_name
         self.filter_type = filter_type
+        self.show_on_table = show_on_table
         if not extras:
             self.extras = dict()
         else:
