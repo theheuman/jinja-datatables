@@ -12,7 +12,7 @@ README = (HERE / "README.md").read_text()
 # This call to setup() does all the work
 setup(
     name="jinja_datatables",
-    version="0.0.2",
+    version="0.0.4",
     description="Python library that helps create searchable, custom filterable datatables",
     long_description=README,
     long_description_content_type="text/markdown",
@@ -27,7 +27,7 @@ setup(
     ],
     package_data={'': ['*.html', '*.js']},
     include_package_data=True,
-    packages=find_packages(exclude="tests"),
+    packages=find_packages(exclude=["tests", "examples"]),
     install_requires=[
         "Jinja2",
     ],

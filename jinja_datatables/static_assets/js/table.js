@@ -105,44 +105,59 @@ function buildDateFilters(table){
     $('#{{ table_view.html_arguments['id'] }} thead tr:eq(1) th.filter_date').each( function (i) {
         var title = $(this).text();
 
-        $(this).removeClass("sorting sorting_asc sorting_desc");
-        var colClass = $(this).attr("class").replace(" ", ".");
-        var column = table.column("." + colClass);
+            $(this).removeClass("sorting sorting_asc sorting_desc"); // remove sorting classes
+            $(this).unbind(); // unbind from events tied to main column headers
 
-        $(this).unbind();
 
-        $(this).html("<input/>");
-        $(this).find("input").daterangepicker({
-            initialText: "Date Range",
-            startDate: moment("1990-01-01", "YYYY-MM-DD"),
-            endDate: undefined
-        });
+            var colClass = $(this).attr("class").replace(/ /g, ".");
+            var column = table.column("." + colClass); // use class string to get correct column
 
-        var picker = $('input', this).data('daterangepicker');
-
-        // custom search function for date range
-        // defined specifically for this column
-        // triggered on change of daterangepicker
-        $.fn.dataTable.ext.search.push(
-            function( settings, data, dataIndex ) {
-                var startDate = picker.startDate;
-                var endDate = picker.endDate;
-                var rowDate = moment(data[column.index()], "MM/DD/YY hh:mm A");
-
-                if ( ( isNaN( startDate ) && isNaN( endDate ) ) ||
-                    ( isNaN( startDate ) && rowDate <= endDate ) ||
-                    ( startDate <= rowDate   && isNaN( endDate ) ) ||
-                    ( startDate <= rowDate   && rowDate <= endDate ) )
-                {
-                    return true;
+            // add input field to th and initialize and attach the daterangepicker to it
+            $(this).html("<input class='form-control' placeholder='Enter Date Range'/>");
+            var input = $(this).find("input");
+            input.daterangepicker({
+                autoUpdateInput: false, // don't automatically apply stupid values and run the search when the page loads
+                showDropdowns: true, // year and month dropdowns for faster timeline navigation
+                locale: {
+                    cancelLabel: 'Clear'
                 }
-                return false;
-            }
-        );
+            });
 
-        $('input', this).on('change', function () {
-            table.draw();
-        });
+            // These events need to be defined because we disabled autoUpdateInput
+            input.on('apply.daterangepicker', function(ev, picker) {
+                $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
+            });
+            input.on('cancel.daterangepicker', function(ev, picker) {
+                $(this).val('');
+            });
+
+            var picker = $('input', this).data('daterangepicker');
+
+            // custom search function for date range
+            // defined specifically for this column
+            // triggered on change of daterangepicker
+            $.fn.dataTable.ext.search.push(
+                function( settings, data, dataIndex ) {
+                    var startDate = picker.startDate;
+                    var endDate = picker.endDate;
+                    var rowDate = moment(data[column.index()], "MM/DD/YY hh:mm A");
+
+                    if ( input.val() == '' || // this is the condition that allows all rows on page load and on filter clearing
+                        ( isNaN( startDate ) && isNaN( endDate ) ) ||
+                        ( isNaN( startDate ) && rowDate <= endDate ) ||
+                        ( startDate <= rowDate   && isNaN( endDate ) ) ||
+                        ( startDate <= rowDate   && rowDate <= endDate ) )
+                    {
+                        return true;
+                    }
+                    return false;
+                }
+            );
+
+            // these is our event listener for when to run the search/filter and redraw the table
+            $('input', this).on('apply.daterangepicker cancel.daterangepicker', function () {
+                table.draw();
+            });
     });
 }
 

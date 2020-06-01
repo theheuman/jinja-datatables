@@ -1,0 +1,1 @@
+recursive-include jinja_datatables *.js *.html

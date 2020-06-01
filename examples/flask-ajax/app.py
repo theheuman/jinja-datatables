@@ -25,7 +25,6 @@ def index():
 @app.route("/get_data")
 def get_data():
     response = dict(data=DATA)
-    print(response)
     return jsonify(response)
 
 
