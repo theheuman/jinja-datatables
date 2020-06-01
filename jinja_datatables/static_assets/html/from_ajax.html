@@ -3,7 +3,8 @@
         var table = $("#{{ table_view.html_arguments['id'] }}").DataTable({
             ajax: {
                 type: "GET",
-                url: "{{ table_view.endpoint }}"
+                url: "{{ table_view.endpoint }}",
+                dataSrc: ''
             },
             columns: [
             {% for column in table_view.columns %}
