@@ -11,7 +11,7 @@
             columns: [
             {% for column in table_view.columns %}
                 {% if column.show_on_table %}
-                { {% for key, value in column.extras.items() %}
+                { {% for key, value in column.arguments.items() %}
                     {{ key }}: {{ value }},
                 {% endfor %}
                 {% if not column.target_set %}

@@ -4,7 +4,7 @@ from enum import Enum
 
 class DatatableColumn:
     data_name: str
-    column_name: str
+    display_name: str
     filter_type: str
     show_on_table: bool # if you want the column in the table object, but you don't want it to show in the view
     # extra arguments to put in a column e.x.:
@@ -18,9 +18,9 @@ class DatatableColumn:
 
     target_set: bool = False
 
-    def __init__(self, data_name: str, column_name: str, filter_type: str, extras: dict = None, show_on_table: bool = True):
+    def __init__(self, data_name: str, display_name: str, filter_type: str, extras: dict = None, show_on_table: bool = True):
         self.data_name = data_name
-        self.column_name = column_name
+        self.display_name = display_name
         self.filter_type = filter_type
         self.show_on_table = show_on_table
         if not extras:
@@ -30,7 +30,7 @@ class DatatableColumn:
 
         self.arguments = self.extras
         if "title" not in self.arguments:
-            self.arguments["title"] = "\"" + self.column_name + "\""
+            self.arguments["title"] = "\"" + self.display_name + "\""
         if "data" not in self.arguments:
             self.arguments["data"] = "\"" + self.data_name + "\""
         if "name" not in self.arguments:
@@ -41,7 +41,8 @@ class DatatableColumn:
 
         if "className" not in self.arguments:
             self.arguments["className"] = ""
-        self.arguments["className"] = "\"" + self.arguments["className"] + " filter_" + self.filter_type + " " + self.data_name + "\""
+        self.arguments["className"] = "\"" + self.arguments["className"] +\
+                                      " filter_" + self.filter_type + " " + self.data_name + "\""
 
 
 class DatatableType(Enum):
@@ -87,7 +88,7 @@ class DatatableTable:
 
         self.columns_dict = {
             col.data_name: {
-                "column_name": col.column_name,
+                "column_name": col.display_name,
                 "filter_type": col.filter_type,
             }
             for col in self.columns
