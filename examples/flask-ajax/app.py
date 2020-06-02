@@ -24,8 +24,7 @@ def index():
 
 @app.route("/get_data")
 def get_data():
-    response = dict(data=DATA)
-    return jsonify(response)
+    return jsonify(DATA)
 
 
 if __name__ == "__main__":
