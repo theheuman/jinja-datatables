@@ -22,11 +22,13 @@ Currently only flask-ajax completed
 There are currently three options
 
 #### From Ajax
-If you want to get all your data asynchronously from a endpoint you can create a datatable oject like this
+**Check examples/flask-ajax for a simple example**
+
+If you want to get all your data asynchronously from a endpoint you can create a datatable object like this
 
     from jinja_datatables.datatable_classes import DatatableColumn, AjaxDatatable
     columns = [
-        DatatableColumn("data_name", "Column Name", "filter_text"
+        DatatableColumn("data_name", "Column Name", "text"
     ]
     endpoint = "/get_data"
     table_view = AjaxDatatable(
@@ -37,6 +39,8 @@ If you want to get all your data asynchronously from a endpoint you can create a
     )
 
 #### From a JS array
+**Check my [HOMM3Guide](https://github.com/theheuman/HOMM3Guide/blob/master/build_table.py) for an example**
+
 If you have all your data defined in a JS array you can create a datatable object like this:
 
     from jinja_datatables.datatable_classes import DatatableColumn, JSArrayDatatable
@@ -60,7 +64,7 @@ If you already have your table in html, then you can easily instantiate a datata
 
     from jinja_datatables.datatable_classes import DatatableColumn, HTMLDatatable
     columns = [
-        DatatableColumn("data_name", "Column Name", "filter_text"),
+        DatatableColumn("data_name", "Column Name", "text"),
     ]
     table_view = HTMLDatatable(
         columns,
