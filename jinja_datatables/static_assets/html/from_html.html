@@ -1,7 +1,8 @@
 <table {% for key, value in table_view.html_arguments.items() %} {{key}}="{{value}}" {% endfor %}></table>
 <script>
     $( document ).ready(function() {
-        var table = $("{{ table_view.html_arguments['id'] }}").DataTable({
+        let selector = "#{{ table_view.html_arguments['id'] }}"
+        var table = $(selector).DataTable({
             columns: [
             {% for column in table_view.columns %}
                 {% if column.show_on_table %}
@@ -19,7 +20,7 @@
             {{key}}: {{value}},
             {% endfor %}
         });
-        buildFilters(table)
+        buildFilters(table, selector)
         {% include "js/table.js" %}
     })
 </script>
