@@ -6,16 +6,16 @@ A python library to simplify rendering datatables in jinja templates
 
 ## TODO
  - Write test for html
- - upload to pip for pip install
  - Add detail row functionality
- - Add no filter option (basically make the cell blank)
  - Make filters an option
  
+## Install
+ 
+    pip install jinja-datatables
+
 ## Usage
 **See this repo's tests folder for an example**
-
-Download this repository into your project (hopefully pip install coming soon)
-
+Currently only flask-ajax completed
 
 ### 1.) Create a table view object
 
@@ -51,8 +51,11 @@ If you have all your data defined in a JS array you can create a datatable objec
         js_array,
     )
 
+For your endpoint, make sure it returns just an array of your data, functionality to customize this behavior might be added in future
 
 #### From HTML
+**This is completely untested**
+
 If you already have your table in html, then you can easily instantiate a datatable on it like this:
 
     from jinja_datatables.datatable_classes import DatatableColumn, HTMLDatatable
