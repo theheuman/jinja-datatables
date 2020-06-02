@@ -13,8 +13,8 @@
                 {% if not column.target_set %}
                     target: {{ loop.index0 }},
                 {% endif %}
-                {% endif %}
                 },
+                {% endif %}
             {% endfor %}
             ],
             {% for key, value in table_view.datatable_arguments.items() %}
